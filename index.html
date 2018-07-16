@@ -8,10 +8,53 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.js"></script>
+
     <script src="js/app.js"></script>
+    <style>
+        .sidenav {
+            height: 100%;
+            width: 300px;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #113446;
+            overflow-x: hidden;
+            padding-top: 20px;
+            margin-top: 55px;
+        }
+        .item {
+            border:1px solid #999;
+            margin-top:15px;
+            padding:15px;
+            border-radius:4px;
+            color: #0e2b39;
+        }
+
+        .item.ng-move,
+        .item.ng-enter,
+        .item.ng-leave {
+            -webkit-transition:all linear 0.5s;
+            transition:all linear 0.5s;
+        }
+
+        .item.ng-leave.ng-leave-active,
+        .item.ng-move,
+        .item.ng-enter {
+            opacity:0;
+        }
+
+        .item.ng-leave,
+        .item.ng-move.ng-move-active,
+        .item.ng-enter.ng-enter-active {
+            opacity:1;
+        }
+
+    </style>
    </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
     <a class="navbar-brand" href="#">Navbar</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -31,14 +74,31 @@
 
         </ul>
         <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"  ng-model="searchNews">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>
 </nav>
-<div ng-view>
+
+<div class="sidenav" ng-controller="sideController">
+
+    <h2 style="color: white;padding:10px;background: #0e2b39;height: 10%" align="center">أخبار سريعة</h2>
+    <br>
+    <ul class="list-unstyled" ng-repeat="feed in feeds" dir="rtl"    >
+        <li class="media"  align="right" >
+            <img  ng-src="{{feed.enclosure.link}}" width="48px" height="30px"  >
+            <div class="media-body" style="padding:5px">
+                <a href="{{feed.link}}"><p style="color: white"   >{{feed.title}}</p></a>
+
+            </div>
+        </li>
+    </ul>
+</div>
+
+<div class="main item" ng-view style="margin-left: 300px;margin-top: 40px" >
 
 </div>
+
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
